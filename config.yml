@@ -1,0 +1,13 @@
+routes:
+    character:
+        url: /api/rickandmorty/character
+        controller: /rickandmorty/character.controller
+        middleware:
+            - requestInit
+    user:
+        url: /api/user
+        controller: /user.controller
+        middleware:
+            - requestInit
+constants:
+    requestIdHeader: mbernal-request-id
