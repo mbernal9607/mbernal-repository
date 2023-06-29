@@ -10,6 +10,8 @@ const logger = new Logger('ROUTER');
 // Load Middlewares
 const middlewares = {
     requestInit: require('../http/middleware/request-init'),
+    authentication: require('../http/middleware/authentication'),
+    authorization: require('../http/middleware/authorization'),
 };
 
 class Router {

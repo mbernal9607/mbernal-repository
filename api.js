@@ -1,13 +1,12 @@
 "use strict";
+const config = require('./config-loader');
+const Logger = require('./src/helper/logger');
+const logger = new Logger('INIT');
 const mongoose = require('mongoose');
 async function startUP() {
 
     try {
         // Starting API
-        const config = require('./config-loader');
-        const Logger = require('./src/helper/logger');
-        const logger = new Logger('INIT');
-
         logger.logMessage({ type: "warn", message: " ---------- Starting up API (Env: *** development  *** ) ---------- \n" });
         logger.logMessage({ type: "warn", message: "Init configs:"});
         logger.logMessage({ type: "debug", message: JSON.stringify(config) });
@@ -27,18 +26,22 @@ async function startUP() {
 
         // Set handler for invalid routes
         router.handleInvalidRoute();
-
+        // Checking DBs connection
+        await checkMongoDBConnection()
         // Start HTTP server
         router.startServer();
-        //connect to mongoDB
-        const uri = `mongodb+srv://mcaminos:6jXaNdNDlvoJNV8g@cluster0.2lufllv.mongodb.net/playground?retryWrites=true&w=majority`;
-
-        mongoose.connect(uri)
-            .then(() => logger.logMessage({ type: "warn", message: " Connected to MongoDB  \n" }))
-            .catch((error) => console.error(error));
     } catch (error) {
-        console.log(' errrrr...', error);
+        logger.logMessage({ type: "error", message: error });
     }
 }
 
 startUP();
+
+async function checkMongoDBConnection(){
+    //connect to mongoDB
+    const uri = `mongodb+srv://${config.constants.mongoDB.user}:${config.constants.mongoDB.password}@cluster0.2lufllv.mongodb.net/playground?retryWrites=true&w=majority`;
+
+    await mongoose.connect(uri)
+        .then(() => logger.logMessage({ type: "warn", message: " ---------- Connected to MongoDB ---------- \n" }))
+        .catch((error) => console.error(error));
+}

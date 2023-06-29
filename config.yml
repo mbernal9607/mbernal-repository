@@ -9,5 +9,18 @@ routes:
         controller: /user.controller
         middleware:
             - requestInit
+            - authentication
+            - authorization
 constants:
     requestIdHeader: mbernal-request-id
+    accessTokenHeader: x-api-session-token
+    jwt_secret: mbernal_jwt_secret
+    mongoDB:
+        user: mcaminos
+        password: 6jXaNdNDlvoJNV8g
+    mysqlDB:
+        host: bjt8fmzkihimf82y2whw-mysql.services.clever-cloud.com
+        user: uhpncerpsboevkeh
+        password: Z9Zr5hDYNV9MrqsLhDTS
+        database: bjt8fmzkihimf82y2whw
+        port: 3306
