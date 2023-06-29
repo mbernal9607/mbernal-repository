@@ -33,7 +33,6 @@ class Router {
     }
 
     startServer() {
-        // Start HTTP server
         this.app.listen(this.port, () => {
             logger.logMessage({ type: "warn", message: ` ---------- Server listining on port [ ${this.port} ] ---------- ` });
         });
@@ -92,6 +91,15 @@ class Router {
                 next();
             }
         });
+    }
+
+    provideDocumentationRoute (){
+        //Documentation with Swagger
+        const swaggerUi = require('swagger-ui-express'),
+            swaggerDoc = require('../../swagger.json')
+
+        this.app.use( '/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+        logger.logMessage({ type: "debug", message: `Swagger docs OK` });
     }
 }
 

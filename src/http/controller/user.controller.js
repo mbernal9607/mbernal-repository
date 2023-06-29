@@ -36,6 +36,12 @@ class User {
                 middleware: this.routeConf.middleware,
                 callback: this.update
             },
+            {
+                httpMethod: 'delete',
+                url: this.routeConf.url + '/:_id',
+                middleware: this.routeConf.middleware,
+                callback: this.delete
+            },
         ];
     }
     async listUsers(request) {
@@ -45,8 +51,9 @@ class User {
     }
 
     async getById(request) {
+        const search_by = request?.query?.searchBy || 'id';
         const params = {
-            id: request.params.id
+            [search_by]: request.params.id
         }
         const user_model = new UserModel();
         const response = await user_model.getById(params);
@@ -63,6 +70,15 @@ class User {
     async update(request) {
         const user_model = new UserModel();
         const response = await user_model.update(request.params.id, request.body);
+        return response;
+    }
+
+    async delete(request) {
+        const params = {
+            _id: request.params._id
+        }
+        const user_model = new UserModel();
+        const response = await user_model.delete(params);
         return response;
     }
 }

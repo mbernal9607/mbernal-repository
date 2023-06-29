@@ -21,6 +21,8 @@
     "mysql": "^2.18.1",
     "read-yaml": "^1.1.0",
     "superagent": "^8.0.9",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3",
     "winston": "^3.9.0"
   }
 }

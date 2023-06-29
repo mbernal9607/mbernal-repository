@@ -1,11 +1,11 @@
 routes:
     character:
-        url: /api/rickandmorty/character
+        url: /api/v1/rickandmorty/character
         controller: /rickandmorty/character.controller
         middleware:
             - requestInit
     user:
-        url: /api/user
+        url: /api/v1/user
         controller: /user.controller
         middleware:
             - requestInit

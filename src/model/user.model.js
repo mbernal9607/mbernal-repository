@@ -5,15 +5,17 @@ const Logger = require('../helper/logger');
 const logger = new Logger('model.user')
 // Schema
 const UserSchema = require('../model/userSquema');
+const ApiError = require('../helper/api-error');
 
 class UserModel extends Model {
     constructor() {
         super();
         this.setSchema({
-            user_id: this.validator.string(),
+            _id: this.validator.string(),
             id: this.validator.number().required(),
             name: this.validator.string().required(),
             email: this.validator.string().required(),
+            date: this.validator.date(),
         });
     }
 
@@ -36,6 +38,7 @@ class UserModel extends Model {
             const validation = super.validate(search_params, params);
             if (validation.success == null) throw validation;
             const user_result = await UserSchema.find(params);
+            if(user_result.length === 0) throw new ApiError(404, 'User not found.')
             return user_result;
         }catch (err) {
             const err_msg = err.error ? err.error : err;
@@ -75,6 +78,23 @@ class UserModel extends Model {
                 .then((data) => data)
                 .catch((error) => error);
 
+            return response;
+        } catch (err) {
+            const err_msg = err.error ? err.error : err;
+            logger.logMessage({ type: "error", message: err_msg });
+            return err;
+        }
+    }
+
+    async delete(searchParams) {
+        try {
+            //  1. searchParams validation
+            const search_params = {
+                keys: Util.getFromObject(this.schema, Object.keys(searchParams)),
+            }
+            const user_params_validation = super.validate(search_params, searchParams);
+            if (user_params_validation.success == null) throw user_params_validation;
+            const response = await UserSchema.findByIdAndDelete(searchParams._id);
             return response;
         } catch (err) {
             const err_msg = err.error ? err.error : err;

@@ -1,0 +1,227 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "mbernal-repo",
+      "description": "My User Project Application API",
+      "license": {
+        "name": "Vass company interview test",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "http://localhost:8000",
+    "basePath": "/api",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/user/{user_id}": {
+            "get": {
+                "summary": "mbernal-repo api/user [GET]",
+                "description": "If user id comes so will return user info but if not comes so will return the list of existing users",
+                "operationId": "mbernal-repo/user[GET]",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/user_id"
+                    },
+                    {
+                        "$ref": "#/components/parameters/token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {}
+                    }
+                },
+                "servers": [
+                    {
+                    "url": "http://localhost:8000",
+                    "variables": {
+                        "endpoint:port": {
+                        "default": "DefaultParameterValue"
+                        }
+                    }
+                    }
+                ]
+            },
+            "put": {
+                "summary": "mbernal-repo api/user [PUT]",
+                "description": "Update existing user given an unique id and new data",
+                "operationId": "mbernal-repo/user[PUT]",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/token"
+                    },
+                    {
+                        "$ref": "#/components/parameters/_id"
+                    },
+                    {
+                        "$ref": "#/components/parameters/id_user"
+                    },
+                    {
+                        "$ref": "#/components/parameters/user_name"
+                    },
+                    {
+                        "$ref": "#/components/parameters/email"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "",
+                    "headers": {}
+                    }
+                },
+                "servers": [
+                    {
+                    "url": "http://localhost:8000",
+                    "variables": {
+                        "endpoint:port": {
+                        "default": "DefaultParameterValue"
+                        }
+                    }
+                    }
+                ]
+            }
+        },
+        "/user": {
+            "post": {
+                "summary": "mbernal-repo api/user [POST]",
+                "description": "Create a new user",
+                "operationId": "mbernal-repo/user[POST]",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/token"
+                    },
+                    {
+                        "$ref": "#/components/parameters/id_user"
+                    },
+                    {
+                        "$ref": "#/components/parameters/user_name"
+                    },
+                    {
+                        "$ref": "#/components/parameters/email"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "",
+                    "headers": {}
+                    }
+                },
+                "servers": [
+                    {
+                    "url": "http://localhost:8000",
+                    "variables": {
+                        "endpoint:port": {
+                        "default": "DefaultParameterValue"
+                        }
+                    }
+                    }
+                ]
+            }
+        },
+        "/user/{_id}": {
+            "delete": {
+                "summary": "mbernal-repo api/user [DELETE]",
+                "description": "Remove a user",
+                "operationId": "mbernal-repo/user[DELETE]",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/token"
+                    },
+                    {
+                        "$ref": "#/components/parameters/_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "",
+                    "headers": {}
+                    }
+                },
+                "servers": [
+                    {
+                    "url": "http://localhost:8000",
+                    "variables": {
+                        "endpoint:port": {
+                        "default": "DefaultParameterValue"
+                        }
+                    }
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "_id": {
+                "name": "_id",
+                "in": "path",
+                "required": true,
+                "style": "simple",
+                "schema": {
+                    "type": "string",
+                    "example": "649d0b161e1ef125d3d159a1"
+                }
+            },
+            "user_id": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "style": "simple",
+                "schema": {
+                    "type": "integer",
+                    "example": 1030667
+                }
+            },
+            "token": {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "style": "simple",
+                "description": "API Token provided by Virfon",
+                "schema": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsI...ji8ji_vfGudAGl0A"
+                }
+            },
+            "user_name": {
+                "name": "name",
+                "in": "body",
+                "required": true,
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "Michael Bernal"
+                }
+            },
+            "id_user": {
+                "name": "id",
+                "in": "body",
+                "required": true,
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "103667"
+                }
+            },
+            "email": {
+                "name": "email",
+                "in": "body",
+                "required": true,
+                "style": "simple",
+                "schema": {
+                    "type": "string",
+                    "example": "mtest@aola.com"
+                }
+            }
+        }
+    }
+}

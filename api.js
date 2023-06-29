@@ -14,23 +14,28 @@ async function startUP() {
         //  Serve routes
         const Router = require('./src/http/router');
         const router = new Router();
-        logger.logMessage({ type: "warn", message: "Serving routes"});
+        logger.logMessage({ type: "warn", message: "Serving routes" });
+        // 'config-loader' file is in charge of bringing the routes from config.yml file
         Object.keys(config.routes).forEach((route) => {
             // Create route instance
             logger.logMessage({ type: "debug", message: config.routes[route].url });
             const ControllerClass = require(config.routes[route].controller);
             const controller = new ControllerClass(config);
+            // For each controller exists a getRequestHandler method with the params route (method, callback, middlewares)
             const controllerHandlers = controller.getRequestHandlers();
             router.provideRoute(controllerHandlers);
         });
 
-        // Set handler for invalid routes
+        // Set documentation with swagger
+        router.provideDocumentationRoute();
+        // Set handler for incoming invalid routes
         router.handleInvalidRoute();
         // Checking DBs connection
         await checkMongoDBConnection()
         // Start HTTP server
         router.startServer();
     } catch (error) {
+        console.log('error....', error)
         logger.logMessage({ type: "error", message: error });
     }
 }
